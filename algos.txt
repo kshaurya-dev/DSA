@@ -1,0 +1,4 @@
+1) Floyd's Tortoise and Hare algorithm
+2) Moore's voting algorithm
+3) Kadane's algorithm
+4) KMP - Knuth Morris Pratt
