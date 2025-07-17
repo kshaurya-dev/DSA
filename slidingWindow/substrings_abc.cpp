@@ -25,7 +25,21 @@ int main(){
    to the hash , increasing freq , the moment we have all a,b,c  in hash 
    we increase hash and all substrings after that (res+=s.size()-right) , so 
    now we gotta shrink the window (move left pointer ) , so we decrease it 
-   until the same condition - are a,b,c still there? - is true;*/
+   until the same condition - are a,b,c still there? - is true;
+   
+   OK WHY DOES s.size()-right work ? lemme explain - 
+   say we have string = aaabcaabbbc , 
+   -> ok , so what's the first substring with all three characters ? LEFT=0 TO RIGHT=5 
+   ->so tell me  after right=5 , all substrings will be valid? cause they contain the substring left=0
+   to right =5 ? hence they need'a be counted ? so do i loop through the end ? NO ! i know the size of 
+   string 
+
+   so right = 5 => valid_substring++ , 
+   right = 6 => valid_substring++,
+   right = 7 => valid_substring++,
+   .....................
+   right=s.size()-1 => valid_substring++,
+   HENCE THE FORMULA - s.size()-right !!*/
    
   int left{0};
   std::vector<int>hash(3,0);

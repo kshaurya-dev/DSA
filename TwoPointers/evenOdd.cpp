@@ -14,7 +14,7 @@ int main(){
     }
     /*so two pointers - left & right , if left is even ? no worries , move it.
     if right is odd? again no worries , move it. 
-    so left is odd and right is even , timeto swap !*/
+    so left is odd and right is even , time to swap !          */
     for(auto& num : nums){
         std::cout<<num<<'-';
     }

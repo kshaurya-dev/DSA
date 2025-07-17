@@ -1,18 +1,19 @@
-#include<iostream>
-
-int main(){
-    int arr[5]={5,4,3,2,1};
-    for(int i{1} ; i<5 ; i++){
-        int key=arr[i];
-        int j=i-1;
-        while(j>=0 && arr[j]>key){
-            arr[j+1]=arr[j];
+#include<bits/stdc++.h>
+using namespace std;
+void insertion_sort(vector<int>&nums){
+    for(int i =1 ; i<nums.size() ; ++i){
+        int key=nums[i];
+        int j = i-1;
+        while(j>=0 && nums[j]>key){
+            nums[j+1]=nums[j];
             j--;
         }
-        arr[j+1]=key;
+        nums[j+1]=key;
     }
-    for(int k=0 ; k<5 ; k++){
-        std::cout<<arr[k]<<' ';
-    }
+}
+int main(){
+    vector<int>nums={9,8,7,65,4,3,2};
+    insertion_sort(nums);
+    for(auto& num:nums)cout<<num<<" ";
     return 0;
 }

@@ -1,39 +1,39 @@
-/*Your'e given an array , find the max length subarray with exactly 
-and only k distinct elements*/
-#include<bits/stdc++.h>
-int main(){
-    std::vector<int>nums={3,3,3,1,2,1,1,2,3,3,4};
-    int k{2};
-    int left{0};
-    int right{0};
-    int res{0};
+#include <bits/stdc++.h>
+using namespace std;
 
-/*BRUTE FORCE-Simply generate all possible subarrays , 
-to check distinct element=k , use set.size()
-    for(int i =0 ; i<nums.size() ; i++){
-        std::set<int>set;
-        for(int j=i ; j<nums.size() ; j++){
-            set.insert(nums[j]);
-            if(set.size()>k){
-                break;
+class LongestKDistinct {
+public:
+    static int brute_force(const vector<int>& nums, int k) {
+/*BRUTE FORCE-Simply generate all possible subarrays ,to check distinct element=k , use set.size()*/
+        int res = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            set<int> s;
+            for (int j = i; j < nums.size(); j++) {
+                s.insert(nums[j]);
+                if (s.size() > k) break;
+                res = max(res, j - i + 1);
             }
-            res=std::max(res,j-i+1);
         }
+        return res;
     }
-    std::cout<<res;
-    return 0;*/
+
+    static int better(const vector<int>& nums, int k) {
 /*now the optimal approach is very iggly-wiggly. So we use a map to store
 the elements and also their frequency this time ....so take right pointer ,
 add the element to map , until our map's size is more than k...now 
 we gotta reduce size of map until it is k ....so keep removing element 
-which is at left until it is completely removed */
-    std::unordered_map<int,int>map;
-    while(right<nums.size()){
-        map[nums[right]]++;
-        while(map.size()>k){
-            map[nums[left]]--;
-            if(map[nums[left]]==0){
-                map.erase(nums[left]);
+which is at left until it is completely removed*/
+        unordered_map<int, int> freq;
+        int left = 0, right = 0, res = 0;
+
+        while (right < nums.size()) {
+            freq[nums[right]]++;
+
+            while (freq.size() > k) {
+                freq[nums[left]]--;
+                if (freq[nums[left]] == 0)
+                    freq.erase(nums[left]);
+                left++;
             }
 /*so this while loop confused me a lot .... but it works by removing value 
 at left until its frequency is zero , lets visualise it -
@@ -41,11 +41,14 @@ say the subarray is - [1,2,1,2,1,3] ,when right goes at the end , map's size
 is more than two, so we move left pointer , decreasig 1's frequency , then 2's
 frequency , and then so on .... the very moment left pointers frequency goes 
 0 - we erase it , thus map size is now 2 !*/
-            left++;
+            res = max(res, right - left + 1);
+            right++;
         }
-        res=std::max(res,right-left+1);
-        right++;
+
+        return res;
     }
-    std::cout<<res;
-    return 0;
-}
+
+    static int optimal(const vector<int>& nums, int k) {
+        return better(nums, k); // same for now
+    }
+};

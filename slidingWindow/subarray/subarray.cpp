@@ -13,19 +13,11 @@ int main(){
         }
         if(hash.size()==k) res=std::max(res,sum);
         for(int i=k ; i<nums.size() ; ++i){
-            std::cout<<"map :  ";
-            for(auto& pair : hash){
-                std::cout<<pair.first<<'-'<<pair.second<<" , ";
-            }
-            std::cout<<'\n';
             sum=sum-nums[i-k];
             if(--hash[nums[i-k]]==0)hash.erase(nums[i-k]);
             sum+=nums[i];
             hash[nums[i]]++;
             if(hash.size()==k){
-                std::cout<<"Found a subarray : ";
-                for(auto& pair:hash) std::cout<<pair.first<<'-'<<pair.second<<" , ";
-                std::cout<<'\n';
                 res=std::max(res , sum);}
         }
        std::cout<<res;
