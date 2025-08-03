@@ -13,10 +13,12 @@ to the string_stack , at the end I empty the string_stack , building all strings
 had to reverse the string , but if i just do temp = stack.top() + temp , no need to fucking 
 reverse , MOTHAFUCKA !*/
 int main(){
-    string s = "3[a2[c]]";
-    stack<int>stack1;
+    string s = "2[abc]3[cd]ef";
+    /*stack<int>stack1;
     stack<string>stack2;
     int i =0;
+    well this is the og soultion , that i did by myslef via stacks ,but could  be done easily
+    by a single stack
     while(i<s.size()){
         char ch = s[i];
         if(isdigit(ch)){
@@ -51,6 +53,26 @@ int main(){
         stack2.pop();
     }
     std::reverse(res.begin() , res.end());
+    cout<<res;
+    */
+    //single stack solution
+    stack<string>stack;
+    for(auto& c : s){
+        string ch(1, c);
+        if(ch!="]")stack.push(ch);
+        else{
+            string substr=""; //build substring
+            while(stack.top()!="[")substr=stack.top()+substr, stack.pop();
+            stack.pop();     //remove the "["
+            string k ="";    //build the integer k
+            while(!stack.empty() && isdigit(stack.top()[0]))k=stack.top()+k , stack.pop();
+            string temp="";  //push k * substr
+            for( int i =0 ; i<stoi(k) ; i++)temp += substr;
+            stack.push(temp);
+        }
+    }
+    string res="";
+    while(!stack.empty())res = stack.top() + res , stack.pop();
     cout<<res;
     return 0;
 }
